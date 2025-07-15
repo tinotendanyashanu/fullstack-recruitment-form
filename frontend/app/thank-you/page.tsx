@@ -11,7 +11,7 @@ export default function ThankYou() {
           <p className="mb-6 text-lg">
             Your application has been received.<br />
             We appreciate your interest in joining our team.<br />
-            We'll review your submission and reach out if you’re shortlisted.
+            We&apos;ll review your submission and reach out if you&apos;re shortlisted.
           </p>
           <Button as={Link} href="https://www.digitalgeeks.pl/" color="primary" variant="shadow">
             Back to Home
