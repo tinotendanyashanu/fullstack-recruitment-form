@@ -25,7 +25,14 @@ export default function ApplicationForm() {
     return fileList[0].size <= 4 * 1024 * 1024; // 4MB
   };
 
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+
   const onSubmit = async (data: any) => {
+    if (!apiUrl) {
+      alert("API URL is not configured.");
+      return;
+    }
+
     setSubmitting(true);
     const formData = new FormData();
 
@@ -37,13 +44,12 @@ export default function ApplicationForm() {
       }
     });
 
-    const apiUrl = process.env.NEXT_PUBLIC_API_URL;
-
     try {
       const res = await fetch(`${apiUrl}/api/applicants/`, {
         method: "POST",
         body: formData,
       });
+
       if (res.ok) {
         reset();
         router.push("/thank-you");
@@ -52,8 +58,9 @@ export default function ApplicationForm() {
       }
     } catch (error) {
       alert("Network error, please try again.");
+    } finally {
+      setSubmitting(false);
     }
-    setSubmitting(false);
   };
 
   return (
@@ -65,7 +72,7 @@ export default function ApplicationForm() {
             placeholder="Enter your full name"
             {...register("name", { required: true })}
             isInvalid={!!errors.name}
-            errorMessage={errors.name && "Name is required"}
+            errorMessage="Name is required"
           />
           <Input
             label="Email"
@@ -73,41 +80,40 @@ export default function ApplicationForm() {
             placeholder="you@email.com"
             {...register("email", { required: true })}
             isInvalid={!!errors.email}
-            errorMessage={errors.email && "Email is required"}
+            errorMessage="Email is required"
           />
           <Input
             label="Phone"
             placeholder="Phone number"
             {...register("phone", { required: true })}
             isInvalid={!!errors.phone}
-            errorMessage={errors.phone && "Phone is required"}
+            errorMessage="Phone is required"
           />
           <Input
             label="City"
             placeholder="City of residence"
             {...register("city", { required: true })}
             isInvalid={!!errors.city}
-            errorMessage={errors.city && "City is required"}
+            errorMessage="City is required"
           />
           <Input
             label="University"
             placeholder="University name"
             {...register("university", { required: true })}
             isInvalid={!!errors.university}
-            errorMessage={errors.university && "University is required"}
+            errorMessage="University is required"
           />
           <Input
             label="Major / Field of Study"
             placeholder="Your major"
             {...register("major", { required: true })}
             isInvalid={!!errors.major}
-            errorMessage={errors.major && "Major is required"}
+            errorMessage="Major is required"
           />
           <Select
             label="Year of Study"
-            placeholder="Select year"
-            {...register("year_of_study", { required: true })}
             isInvalid={!!errors.year_of_study}
+            {...register("year_of_study", { required: true })}
           >
             {YEARS.map((y) => (
               <SelectItem key={y.value} textValue={y.value}>
@@ -129,7 +135,7 @@ export default function ApplicationForm() {
               validate: validateFile,
             })}
             isInvalid={!!errors.cv}
-            errorMessage={errors.cv && "CV is required and must be under 4MB"}
+            errorMessage="CV is required and must be under 4MB"
           />
           <Input
             label="Cover Letter (PDF/DOCX, max 4MB)"
@@ -140,7 +146,7 @@ export default function ApplicationForm() {
               validate: validateFile,
             })}
             isInvalid={!!errors.cover_letter}
-            errorMessage={errors.cover_letter && "Cover letter required, max 4MB"}
+            errorMessage="Cover letter required, max 4MB"
           />
           <Input
             label="Supporting Documents (optional, PDF/DOCX, max 4MB)"
@@ -150,7 +156,7 @@ export default function ApplicationForm() {
               validate: validateFile,
             })}
             isInvalid={!!errors.supporting_documents}
-            errorMessage={errors.supporting_documents && "Max 4MB"}
+            errorMessage="Max 4MB"
           />
           <Button
             type="submit"
