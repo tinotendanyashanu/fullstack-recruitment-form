@@ -1,6 +1,6 @@
 from django.db import models
 from django.core.validators import FileExtensionValidator
-from .validators import validate_file_size  # Make sure this exists!
+from .validators import validate_file_size
 
 
 def upload_to_applicant(instance, filename):
