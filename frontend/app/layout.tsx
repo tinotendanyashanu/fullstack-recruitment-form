@@ -51,8 +51,8 @@ export default function RootLayout({
               <Link
                 isExternal
                 className="flex items-center gap-1 text-current"
-                href=""
-                title="heroui.com homepage"
+                href="https://www.digitalgeeks.pl/"
+                title="DigitalGeeks"
               >
                 <span className="text-default-600">Powered by</span>
                 <p className="text-primary">DigitalGeeks</p>

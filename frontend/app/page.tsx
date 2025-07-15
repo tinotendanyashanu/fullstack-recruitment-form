@@ -2,10 +2,9 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
-import { Input } from "@heroui/input";
+import { Input, Textarea } from "@heroui/input";
 import { Button } from "@heroui/button";
 import { Select, SelectItem } from "@heroui/select";
-import {Textarea} from "@heroui/input";
 import { Card, CardBody } from "@heroui/card";
 
 const YEARS = [
@@ -21,15 +20,15 @@ export default function ApplicationForm() {
   const [submitting, setSubmitting] = useState(false);
   const { register, handleSubmit, reset, formState: { errors } } = useForm();
 
-  // File validation for max 4MB
   const validateFile = (fileList: FileList | null) => {
     if (!fileList || !fileList[0]) return true;
-    return fileList[0].size <= 4 * 1024 * 1024;
+    return fileList[0].size <= 4 * 1024 * 1024; // 4MB
   };
 
   const onSubmit = async (data: any) => {
     setSubmitting(true);
     const formData = new FormData();
+
     Object.entries(data).forEach(([key, value]) => {
       if (value instanceof FileList) {
         if (value.length > 0) formData.append(key, value[0]);
@@ -38,15 +37,16 @@ export default function ApplicationForm() {
       }
     });
 
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+
     try {
-      const res = await fetch("http://localhost:8000/api/applicants/", {
+      const res = await fetch(`${apiUrl}/api/applicants/`, {
         method: "POST",
         body: formData,
       });
       if (res.ok) {
         reset();
         router.push("/thank-you");
-        return;
       } else {
         alert("There was an error submitting your application.");
       }
@@ -110,7 +110,7 @@ export default function ApplicationForm() {
             isInvalid={!!errors.year_of_study}
           >
             {YEARS.map((y) => (
-              <SelectItem key={y.value}>
+              <SelectItem key={y.value} textValue={y.value}>
                 {y.label}
               </SelectItem>
             ))}
