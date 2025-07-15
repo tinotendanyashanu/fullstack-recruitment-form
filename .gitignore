@@ -1,0 +1,89 @@
+# General OS files
+.DS_Store
+Thumbs.db
+
+# Environment files
+.env
+.env.*       # e.g. .env.local, .env.production
+*.env
+
+# VSCode and JetBrains project files
+.vscode/
+.idea/
+
+# Node/Next.js (frontend)
+frontend/node_modules/
+frontend/.next/
+frontend/.env
+frontend/.env.*
+
+# Next.js build output
+frontend/out/
+
+# npm/yarn/lock files (keep if you want consistent installs)
+frontend/yarn-error.log
+frontend/yarn-debug.log
+frontend/npm-debug.log
+frontend/pnpm-lock.yaml
+
+# Django/Python (backend)
+backend/__pycache__/
+backend/**/*.pyc
+backend/*.pyc
+backend/.env
+backend/db.sqlite3
+backend/media/
+backend/staticfiles/
+backend/static/
+backend/local_settings.py
+
+# Python virtual environments (typical names)
+venv/
+backend/venv/
+env/
+backend/env/
+ENV/
+backend/ENV/
+
+# Pip wheel files
+*.whl
+
+# Coverage reports
+htmlcov/
+.coverage
+.tox/
+.nox/
+.cache/
+.pytest_cache/
+
+# Logs
+*.log
+logs/
+backend/logs/
+
+# MyPy
+.mypy_cache/
+.dmypy.json
+
+# SASS cache
+.sass-cache/
+
+# Backup files
+*.bak
+*.swp
+
+# MacOS folder attributes
+.AppleDouble
+
+# Render/Heroku build files
+build/
+dist/
+
+# Other
+*.egg-info/
+.eggs/
+pip-log.txt
+
+# Ignore test database if present
+test.db
+backend/test.db
